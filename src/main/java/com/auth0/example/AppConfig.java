@@ -24,7 +24,7 @@ public class AppConfig extends Auth0SecurityConfig {
     @Override
     protected void authorizeRequests(final HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/css/**", "/fonts/**", "/js/**", "/login").permitAll()
+                .antMatchers("/", "/css/**", "/fonts/**", "/assets/**", "/login").permitAll()
                 .antMatchers("/portal/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
                 .antMatchers(securedRoute).authenticated();
     }

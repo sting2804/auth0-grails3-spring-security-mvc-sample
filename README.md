@@ -110,12 +110,11 @@ defined under `src/com.auth0.example.AppConfig.java`
 
 ```
   // Apply the Authentication and Authorization Strategies your application endpoints require
-        http
-                .authorizeRequests()
-                .antMatchers("/css/**", "/fonts/**", "/js/**", "/login").permitAll()
-                .antMatchers("/portal/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
-//                .antMatchers("/portal/**").hasAuthority("ROLE_ADMIN")
-                .antMatchers(getSecuredRoute()).authenticated();
+    http.authorizeRequests()
+            .antMatchers("/", "/css/**", "/fonts/**", "/assets/**", "/login").permitAll()
+            .antMatchers("/portal/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
+            .antMatchers(securedRoute).authenticated();
+    }
 ```
 
 Here, we only allow users with `ROLE_USER` or `ROLE_ADMIN` to access the home page.

@@ -47,8 +47,6 @@ dependencies {
     compile "org.springframework.boot:spring-boot-starter-actuator"
     compile "org.springframework.boot:spring-boot-starter-tomcat"
     compile 'org.springframework.boot:spring-boot-starter-security'
-//    compile 'org.springframework.security:spring-security-taglibs'
-//    runtime group: 'org.springframework.security', name: 'spring-security-taglibs', version: '4.0.1.RELEASE'
     compile "org.grails:grails-dependencies"
     compile "org.grails:grails-web-boot"
     compile "org.grails.plugins:cache"
