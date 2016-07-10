@@ -124,7 +124,7 @@ Here, we only allow users with `ROLE_USER` or `ROLE_ADMIN` to access the home pa
 
 Enter your:
 
-`client_id`, `client_secret`, and `domain` information into `grails-app/conf/auth0.properties`
+`client_id`, `issuer`, `client_secret`, and `domain` information into `grails-app/conf/auth0.properties`
 
 Note: There are two properties in `auth0.properties` that you do not need to touch. Leave values as `false`
 
@@ -136,7 +136,7 @@ provided with the `auth0-spring-security-mvc` library itself. That is a default 
 simpler applications seeking to have an out of the box secured endpoint URL - similar to `auth0-servlet` library.
 
 For details on the other settings, please check the README for the library this sample depends on  [Auth0 Spring Security MVC](https://github.com/auth0/auth0-spring-security-mvc).
-In particular, [this section on defalut configuration](https://github.com/auth0/auth0-spring-security-mvc#default-configuration) which lists each property together with a
+In particular, [this section on default configuration](https://github.com/auth0/auth0-spring-security-mvc#default-configuration) which lists each property together with a
 description on its purpose.
 
 ### Build and Run
