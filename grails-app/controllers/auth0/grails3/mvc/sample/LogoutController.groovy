@@ -1,7 +1,6 @@
 package auth0.grails3.mvc.sample
 
 import com.auth0.web.Auth0Config
-import org.grails.web.util.WebUtils
 import org.springframework.beans.factory.annotation.Autowired
 
 class LogoutController {
@@ -13,12 +12,10 @@ class LogoutController {
 
     def logout() {
         log.info("Performing logout")
-        def req = WebUtils.retrieveGrailsWebRequest().getCurrentRequest()
-        if (req.getSession() != null) {
-            req.getSession().invalidate()
+        if (request.getSession(false)) {
+            request.session.invalidate()
         }
-        def logoutPath = auth0Config.getOnLogoutRedirectTo()
-        redirect(uri: logoutPath)
+        redirect(uri: auth0Config.onLogoutRedirectTo)
     }
 
 }
