@@ -131,6 +131,15 @@ Enter your:
 
 `client_id`, `issuer`, `client_secret`, and `domain` information into `grails-app/conf/auth0.properties`
 
+An example of populated values is shown below (please use your own values):
+
+```
+auth0.domain: arcseldon.auth0.com
+auth0.issuer: https://arcseldon.auth0.com/
+auth0.clientId: 7JbjgoK7BAuLL4AL6x8pOYfNSiBeZMdW
+auth0.clientSecret: dn0p_95MmZKMDoXXXXXXXkE5Uu1Opo9oXXXXaho03P9Q907oHUE
+```
+
 Note: There are two properties in `auth0.properties` that you do not need to touch. Leave values as `false`
 
 `auth0.servletFilterEnabled: false` - this ensures we don't autowire the ServletFilter defined in an Auth0 dependency
