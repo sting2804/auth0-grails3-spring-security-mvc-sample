@@ -66,7 +66,7 @@ or username-password DB connection.
 
 
 Since this sample applies Role based authorization on the Home Page (defaults to requiring `ROLE_ADMIN`), go to `Rules`
-and create the following new Rule:
+(in the Auth0 dashboard) and create the following new Rule (just copy and paste the snippet below into a new rule):
 
 ```
 function (user, context, callback) {
@@ -103,6 +103,12 @@ function (user, context, callback) {
 In our simple Rule above, we add `ROLE_ADMIN` to any user profiles whose email addresses are `gmail.com` and `auth0.com` domains.
 Otherwise, we only provide `ROLE_USER` role. Our Spring Security Sample app will read this information from the UserProfile and apply
 the granted authorities when checking authorization access to secured endpoints configured with Role based permissions
+Obviously, please modify the rule to your needs (for example the email domain you will be using etc if not gmail).
+
+
+### Inside the Application
+
+###### Authentication and authorization settings
 
 Here is our sample `AppConfig` entry where we specify the endpoints security settings -
 defined under `src/com.auth0.example.AppConfig.java`
@@ -119,8 +125,7 @@ defined under `src/com.auth0.example.AppConfig.java`
 
 Here, we only allow users with `ROLE_USER` or `ROLE_ADMIN` to access the home page.
 
-
-### Inside the Application - update configuration information
+###### Update configuration information
 
 Enter your:
 
