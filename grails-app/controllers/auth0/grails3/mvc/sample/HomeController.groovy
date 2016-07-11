@@ -29,8 +29,6 @@ class HomeController {
         }
 
         Auth0User user = SessionUtils.getAuth0User(request)
-        log.info("User name: {}", user.name)
-
         [user: user]
     }
 }
