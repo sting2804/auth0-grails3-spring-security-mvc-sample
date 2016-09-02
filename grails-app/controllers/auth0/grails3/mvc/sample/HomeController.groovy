@@ -6,8 +6,10 @@ import com.auth0.web.Auth0Config
 import com.auth0.web.Auth0User
 import com.auth0.web.SessionUtils
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.context.SecurityContextHolder
 
+@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 class HomeController {
 
     static defaultAction = "home"
