@@ -3,6 +3,7 @@ package auth0.grails3.mvc.sample
 import com.auth0.web.Auth0Config
 import com.auth0.web.Auth0User
 import com.auth0.web.SessionUtils
+import com.auth0.web.Tokens
 import grails.converters.JSON
 import org.springframework.security.access.prepost.PreAuthorize
 
@@ -18,7 +19,17 @@ class HomeController {
         log.info("Home page")
 
         adminService.ensureAdmin()
+        Tokens tokens = SessionUtils.getTokens(request)
         Auth0User user = SessionUtils.getAuth0User(request)
         render ([user: user] as JSON)
+    }
+
+    def createUser(){
+        def user = adminService.createUser(params.email, params.password, params.username)
+        render ([user: user] as JSON)
+    }
+
+    def findAllUsers(){
+        render ([users: adminService.findAllUsers()] as JSON)
     }
 }

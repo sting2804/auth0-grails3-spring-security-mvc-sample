@@ -1,6 +1,8 @@
+import javax.servlet.ServletContext
+
 class BootStrap {
 
-    def init = { servletContext ->
+    def init = { ServletContext servletContext ->
     }
     def destroy = {
     }

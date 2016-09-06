@@ -48,6 +48,7 @@ dependencies {
     compile 'com.auth0:auth0-spring-security-mvc:0.0.3'
     compile 'javax.servlet:jstl:1.2'
     compile 'org.springframework.boot:spring-boot-starter-security'
+
     console "org.grails:grails-console"
     profile "org.grails.profiles:web"
     runtime "com.bertramlabs.plugins:asset-pipeline-grails:2.8.2"

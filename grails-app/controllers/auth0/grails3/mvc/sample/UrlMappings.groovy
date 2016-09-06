@@ -13,6 +13,8 @@ class UrlMappings {
         "/callback"(controller: 'callback')
         home:
         "/portal/home"(controller: 'home')
+        "/portal/createUser"(controller: 'home', action: [GET: 'createUser'])
+        "/portal/findAllUsers"(controller: 'home', action: [GET: 'findAllUsers'])
 
         //"/"(view:"/index")
         "500"(controller: 'error', exception: AccessDeniedException,
