@@ -1,11 +1,19 @@
 package auth0.grails3.mvc.sample
 
 import grails.converters.JSON
+import org.grails.web.json.JSONElement
+import org.springframework.web.client.HttpClientErrorException
 
 class ErrorController {
     def handleUnexpectedError() {
         def exception = request.exception?.cause?.target
         render([status: 500, exception: exception] as JSON)
+    }
+
+    def handleHttpClientErrorException(){
+        HttpClientErrorException exception = request.exception?.cause?.target
+        Map requestBody = JSON.parse(exception.responseBodyAsString) as  Map
+        render([status: 400, message: requestBody.message] as JSON)
     }
 
     def handleAuthenticationError() {

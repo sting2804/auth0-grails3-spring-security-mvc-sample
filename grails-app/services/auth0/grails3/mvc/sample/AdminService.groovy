@@ -3,8 +3,14 @@ package auth0.grails3.mvc.sample
 import com.auth0.Auth0
 import com.auth0.authentication.AuthenticationAPIClient
 import com.auth0.authentication.result.DatabaseUser
+import com.auth0.authentication.result.UserIdentity
+import com.auth0.authentication.result.UserProfile
 import com.auth0.spring.security.mvc.Auth0UserDetails
+import com.auth0.web.Auth0User
 import grails.transaction.Transactional
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.Response
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpEntity
@@ -16,11 +22,14 @@ import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.web.client.HttpClientErrorException
 import org.springframework.web.client.RestTemplate
 
+import java.security.Principal
+
 @Transactional
 class AdminService {
 
-    @Autowired
     RestTemplate restTemplate
+    DaoService daoService
+
     @Value('${auth0.connection}')
     String connection
     @Value('${auth0.domain}')
@@ -35,25 +44,27 @@ class AdminService {
     String issuer
 
 
-    List findAllUsers(){
-        String idToken = RestService.getIdToken()
-        HttpHeaders headers = new HttpHeaders()
-        headers.set("Authorization", "Bearer $managementToken");
-        List users = []
-        try{
-            ResponseEntity entity = restTemplate.exchange(issuer+"api/v2/users", HttpMethod.GET, new HttpEntity<Object>(headers), List)
-            users = entity.getBody()
-        } catch (HttpClientErrorException e){
-            e.printStackTrace()
-        }
-        return users
+    List findAllUsers() {
+        String url = issuer + "api/v2/users?q=app_metadata.clients%3Asome.domain.auth0.com&search_engine=v2"
+        return daoService.makeHttpRequestToAuth0ManagementApi(url, HttpMethod.GET, List.class)
     }
 
-    DatabaseUser createUser(String email, String password, String username = null){
-        Auth0 auth0 = new Auth0(clientId, clientSecret, domain)
-        AuthenticationAPIClient client = auth0.newAuthenticationAPIClient()
-        def res = client.signUp(email, password, username).execute()
-        DatabaseUser newUser = client.createUser(email, password, username).execute()
+    def createUser(String password, String email) {
+        String url = issuer + "api/v2/users"
+        Map userMap = [
+                connection: connection,
+                name: email,
+                nickname: email.substring(0, email.indexOf('@')),
+                password: password,
+                email: email,
+                email_verified: false,
+                app_metadata:[
+                        clients:[
+                                domain
+                        ]
+                ]
+        ]
+        return daoService.makeHttpRequestToAuth0ManagementApi(url, HttpMethod.POST, Object, userMap)
     }
 
     boolean ensureAdmin() {
@@ -62,10 +73,10 @@ class AdminService {
         return true
     }
 
-    Auth0UserDetails getAuth0UserDetails(){
+    Auth0UserDetails getAuth0UserDetails() {
         final Authentication authentication = SecurityContextHolder.context.authentication
-        def a  = authentication.credentials
-        def b  = authentication.details
+        def a = authentication.credentials
+        def b = authentication.details
         final Auth0UserDetails currentUser = (Auth0UserDetails) authentication.principal
         return currentUser
     }

@@ -25,7 +25,7 @@ class HomeController {
     }
 
     def createUser(){
-        def user = adminService.createUser(params.email, params.password, params.username)
+        def user = adminService.createUser(params.password, params.email)
         render ([user: user] as JSON)
     }
 
