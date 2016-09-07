@@ -1,28 +1,12 @@
 package auth0.grails3.mvc.sample
 
-import com.auth0.Auth0
-import com.auth0.authentication.AuthenticationAPIClient
-import com.auth0.authentication.result.DatabaseUser
-import com.auth0.authentication.result.UserIdentity
-import com.auth0.authentication.result.UserProfile
 import com.auth0.spring.security.mvc.Auth0UserDetails
-import com.auth0.web.Auth0User
 import grails.transaction.Transactional
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.Response
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.http.HttpEntity
-import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpMethod
-import org.springframework.http.ResponseEntity
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.context.SecurityContextHolder
-import org.springframework.web.client.HttpClientErrorException
 import org.springframework.web.client.RestTemplate
-
-import java.security.Principal
 
 @Transactional
 class AdminService {
@@ -45,7 +29,7 @@ class AdminService {
 
 
     List findAllUsers() {
-        String url = issuer + "api/v2/users?q=app_metadata.clients%3Asome.domain.auth0.com&search_engine=v2"
+        String url = issuer + "api/v2/users?q=app_metadata.clients%3A (\"$domain\")&search_engine=v2"
         return daoService.makeHttpRequestToAuth0ManagementApi(url, HttpMethod.GET, List.class)
     }
 

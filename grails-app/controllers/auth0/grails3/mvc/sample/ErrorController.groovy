@@ -1,7 +1,6 @@
 package auth0.grails3.mvc.sample
 
 import grails.converters.JSON
-import org.grails.web.json.JSONElement
 import org.springframework.web.client.HttpClientErrorException
 
 class ErrorController {
