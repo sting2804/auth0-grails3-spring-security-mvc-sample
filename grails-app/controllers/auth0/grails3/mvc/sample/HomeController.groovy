@@ -19,6 +19,7 @@ class HomeController {
         log.info("Home page")
 
         adminService.ensureAdmin()
+        println User.list()
         Tokens tokens = SessionUtils.getTokens(request)
         Auth0User user = SessionUtils.getAuth0User(request)
         render ([user: user] as JSON)

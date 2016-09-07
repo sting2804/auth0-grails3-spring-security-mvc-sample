@@ -30,10 +30,14 @@ class AdminService {
 
     List findAllUsers() {
         String url = issuer + "api/v2/users?q=app_metadata.clients%3A (\"$domain\")&search_engine=v2"
-        return daoService.makeHttpRequestToAuth0ManagementApi(url, HttpMethod.GET, List.class)
+        List users = daoService.makeHttpRequestToAuth0ManagementApi(url, HttpMethod.GET, List.class)
+        return users
     }
 
-    def createUser(String password, String email) {
+    def createUser(String password, String email, String role = null) {
+        if(!role || role!="ROLE_INTEGRATOR")
+            role = "ROLE_USER"
+
         String url = issuer + "api/v2/users"
         Map userMap = [
                 connection: connection,
@@ -45,6 +49,9 @@ class AdminService {
                 app_metadata:[
                         clients:[
                                 domain
+                        ],
+                        roles: [
+                                role
                         ]
                 ]
         ]

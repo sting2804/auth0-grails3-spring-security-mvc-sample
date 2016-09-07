@@ -11,6 +11,7 @@ import org.springframework.web.client.RestTemplate
 @Transactional
 class DaoService {
 
+    AdminService adminService
     RestTemplate restTemplate
     @Value('${auth0.managementToken}')
     String managementToken
@@ -22,5 +23,39 @@ class DaoService {
 
         ResponseEntity entity = restTemplate.exchange(url, method, httpEntity, returnType)
         return entity.getBody()
+    }
+
+    def createLocalUsersFromListOfAuth0Users() {
+        List auth0Users = adminService.findAllUsers()
+
+        List<User> localUserList = User.list()
+        auth0Users.each { userMap ->
+            User userForUpdate = localUserList.find { it.userId == userMap.user_id }
+            if (userForUpdate) {
+                userForUpdate.userId = userMap.user_id
+                userForUpdate.email = userMap.email
+                userForUpdate.username = userMap.name
+                userForUpdate.emailVerified = userMap.email_verified
+                userForUpdate.picture = userMap.picture
+                userForUpdate.firstName = userMap.given_name
+                userForUpdate.surname = userMap.family_name
+                //userForUpdate.updatedAt = userMap.updated_at
+                //userForUpdate.createdAt = userMap.created_at
+            } else {
+                userForUpdate = new User(
+                        userId: userMap.user_id,
+                        email: userMap.email,
+                        username: userMap.name,
+                        emailVerified: userMap.email_verified,
+                        picture: userMap.picture,
+                        firstName: userMap.given_name,
+                        surname: userMap.family_name,
+                        //updatedAt: userMap.updated_at,
+                        //createdAt: userMap.created_at,
+                )
+            }
+            userForUpdate.save(flush: true)
+            log.debug("local user: " + userForUpdate)
+        }
     }
 }
