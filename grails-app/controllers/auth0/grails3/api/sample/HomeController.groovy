@@ -1,8 +1,9 @@
-package auth0.grails3.mvc.sample
+package auth0.grails3.api.sample
 
 import grails.converters.JSON
+import org.springframework.security.access.prepost.PreAuthorize
 
-//@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 class HomeController {
 
     static defaultAction = "home"
@@ -14,8 +15,7 @@ class HomeController {
 
         adminService.ensureAdmin()
         println User.list()
-        //Tokens tokens = SessionUtils.getTokens(request)
-        //Auth0User user = SessionUtils.getAuth0User(request)
+        def user = adminService.getAuth0UserMap()
         render ([user: user] as JSON)
     }
 

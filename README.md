@@ -1,11 +1,11 @@
-## Sample application demonstrating Auth0, Grails 3, and Spring Security integration for a Grails 3 MVC application
+## Sample application demonstrating Auth0, Grails 3, and Spring Security integration for a Grails 3 API application
 
-This is a companion sample for the [Auth0 Spring Security MVC](https://github.com/auth0/auth0-spring-security-mvc) library.
+This is a companion sample for the [Auth0 Spring Security API](https://github.com/auth0/auth0-spring-security-api) library.
 Please refer to that library and documentation for further information specific to the library itself.
 
 This sample application shows you how to:
 
- 1. Configure and run your Grails 3 application with Auth0 (Lock or Auth0.js) and Spring Security
+ 1. Configure and run your Grails 3 application with Spring Security
  2. 100% Java Configuration (Annotations)
  3. Secure one or more URL endpoints with Role / Authority based permissions (ROLE_USER, ROLE_ADMIN etc)
  4. Secure Java Services using method level security annotations for role based access control
@@ -44,19 +44,6 @@ Create an application - for the purposes of this sample - `app`
 
 Ensure you add the following to the settings.
 
-Allowed Callback URL:
-
-```
-http://localhost:3099/callback
-```
-
-Ensure you add the following to the settings.
-
-Allowed Logout URLs:
-
-```
-http://localhost:3099/logout
-```
 
 Add one or more `connections` to your application - for instance Google Social Connection,
 or username-password DB connection.
@@ -117,8 +104,6 @@ defined under `src/com.auth0.example.AppConfig.java`
 ```
   // Apply the Authentication and Authorization Strategies your application endpoints require
     http.authorizeRequests()
-            .antMatchers("/", "/css/**", "/fonts/**", "/assets/**", "/login").permitAll()
-            .antMatchers("/portal/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
             .antMatchers(securedRoute).authenticated();
     }
 ```
@@ -127,31 +112,9 @@ Here, we only allow users with `ROLE_USER` or `ROLE_ADMIN` to access the home pa
 
 ###### Update configuration information
 
-Enter your:
 
-`client_id`, `issuer`, `client_secret`, and `domain` information into `grails-app/conf/auth0.properties`
+For details on this settings, please check the README for the library this sample depends on  [Auth0 Spring Security API](https://github.com/auth0/auth0-spring-security-api).
 
-An example of populated values is shown below (please use your own values):
-
-```
-auth0.domain: arcseldon.auth0.com
-auth0.issuer: https://arcseldon.auth0.com/
-auth0.clientId: 7JbjgoK7BAuLL4AL6x8pOYfNSiBeZMdW
-auth0.clientSecret: dn0p_95MmZKMDoXXXXXXXkE5Uu1Opo9oXXXXaho03P9Q907oHUE
-```
-
-Note: There are two properties in `auth0.properties` that you do not need to touch. Leave values as `false`
-
-`auth0.servletFilterEnabled: false` - this ensures we don't autowire the ServletFilter defined in an Auth0 dependency
-library.
-
-`auth0.defaultAuth0WebSecurityEnabled: false` - this ensures we do not autowire the default configuration file
-provided with the `auth0-spring-security-mvc` library itself. That is a default configuration suitable only for
-simpler applications seeking to have an out of the box secured endpoint URL - similar to `auth0-servlet` library.
-
-For details on the other settings, please check the README for the library this sample depends on  [Auth0 Spring Security MVC](https://github.com/auth0/auth0-spring-security-mvc).
-In particular, [this section on default configuration](https://github.com/auth0/auth0-spring-security-mvc#default-configuration) which lists each property together with a
-description on its purpose.
 
 ### Build and Run
 
@@ -166,26 +129,7 @@ Then, go to [http://localhost:3099/](http://localhost:3099/).
 The Grails landing page has been left with the sample so you can see the Controllers used, and get general information
 on the Grails application itself. Since it launches from the root URL it is unsecured and hence available on startup.
 
-To login, go to [http://localhost:3099/login](http://localhost:3099/login) - you can click on the LoginController link if you like.
-
----
-
-### Screenshots of the overall flow (minus growler notifications):
-
-
-#### 1. Grails
-
-![](img/3.grails.jpg)
-
-#### 2.Login
-
-![](img/1.login.jpg)
-
-#### 3. Home
-
-![](img/2.home.jpg)
-
-That's it!
+To get token you can make GET request to [http://your_domain.auth0.com/oauth/ro](http://your_domain.auth0.com/oauth/ro). See more about this [https://auth0.com/docs/api/authentication#!#post--oauth-ro](here).
 
 ---
 

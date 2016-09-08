@@ -1,4 +1,4 @@
-package auth0.grails3.mvc.sample
+package auth0.grails3.api.sample
 
 import grails.transaction.Transactional
 import org.springframework.beans.factory.annotation.Value
@@ -29,6 +29,14 @@ class DaoService {
         List auth0Users = adminService.findAllUsers()
 
         List<User> localUserList = User.list()
+        if(localUserList.size()>auth0Users.size()){
+            List auth0UserIdList = auth0Users*.user_id
+            List wrongLocalUsers = localUserList.findAll { !auth0UserIdList.contains(it.userId)}
+            wrongLocalUsers.each {
+                it.delete(flush:true)
+            }
+            localUserList = User.list()
+        }
         auth0Users.each { userMap ->
             User userForUpdate = localUserList.find { it.userId == userMap.user_id }
             if (userForUpdate) {

@@ -1,4 +1,4 @@
-package auth0.grails3.mvc.sample
+package auth0.grails3.api.sample
 
 import com.auth0.spring.security.api.Auth0UserDetails
 import grails.transaction.Transactional
@@ -69,4 +69,10 @@ class AdminService {
         final Auth0UserDetails currentUser = (Auth0UserDetails) authentication.principal
         return currentUser
     }
+
+    def getAuth0UserMap() {
+        final Authentication authentication = SecurityContextHolder.context.authentication
+        return authentication?.details
+    }
+
 }

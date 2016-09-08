@@ -11,7 +11,7 @@ buildscript {
 }
 
 version "0.1"
-group "auth0.grails3.mvc.sample"
+group "auth0.grails3.api.sample"
 
 apply plugin:"eclipse"
 apply plugin:"idea"
@@ -72,15 +72,11 @@ tasks.withType(org.springframework.boot.gradle.run.BootRunTask) {
         systemProperty('auth0.issuer', "https://investigator.eu.auth0.com/")
         systemProperty('auth0.clientId', "PkPG12aYud4DBFKEtcGli3P0vz0jHHry")
         systemProperty('auth0.clientSecret', "wh0SNz8ECPVjbFmA37EtqilqPQy2WrakO1HzY7bu4QTCs-JYXxLxg_2MOBFcdQR-")
-        systemProperty('auth0.onLogoutRedirectTo', "/login")
         systemProperty('auth0.securedRoute', "/**")
-        systemProperty('auth0.loginCallback', "/callback")
-        systemProperty('auth0.loginRedirectOnSuccess', "/portal/home")
-        systemProperty('auth0.loginRedirectOnFail', "/login")
         systemProperty('auth0.base64EncodedSecret', "true")
         systemProperty('auth0.authorityStrategy', "ROLES")
-        systemProperty('auth0.servletFilterEnabled', "false")
-        systemProperty('auth0.defaultAuth0WebSecurityEnabled', "false")
+        systemProperty('auth0.signingAlgorithm', "HS256")
+        systemProperty('auth0.defaultAuth0ApiSecurityEnabled', "false")
         systemProperty('auth0.connection', "Username-Password-Authentication")
         systemProperty('auth0.managementToken', "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJKVnR2QWFuQ05aNmk4aFhnak5uRHFsZE9ScXRyNHRuZyIsInNjb3BlcyI6eyJ1c2VycyI6eyJhY3Rpb25zIjpbInJlYWQiLCJ1cGRhdGUiLCJjcmVhdGUiLCJkZWxldGUiXX19LCJpYXQiOjE0NzMxOTQwMDAsImp0aSI6ImFmY2M4ODNhZGFmNGU2MTVhYTA0YWUyMGI5YWNlOGZmIn0.mCQrlASdcNdBlbQSMMEjjC9bRUMQzp8gqaRbKjZ-yM8")
     }

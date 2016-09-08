@@ -1,4 +1,4 @@
-import auth0.grails3.mvc.sample.DaoService
+import auth0.grails3.api.sample.DaoService
 
 import javax.servlet.ServletContext
 

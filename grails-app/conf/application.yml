@@ -54,7 +54,7 @@ environments:
 grails:
     profile: web
     codegen:
-        defaultPackage: auth0.grails3.mvc.sample
+        defaultPackage: auth0.grails3.api.sample
     spring:
         transactionManagement:
             proxies: false

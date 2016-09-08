@@ -1,4 +1,4 @@
-package auth0.grails3.mvc.sample
+package auth0.grails3.api.sample
 
 import grails.converters.JSON
 import org.springframework.web.client.HttpClientErrorException
