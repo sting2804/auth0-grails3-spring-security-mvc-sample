@@ -1,17 +1,15 @@
 package auth0.grails3.mvc.sample
 
-import com.auth0.spring.security.mvc.Auth0UserDetails
+import com.auth0.spring.security.api.Auth0UserDetails
 import grails.transaction.Transactional
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpMethod
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.context.SecurityContextHolder
-import org.springframework.web.client.RestTemplate
 
 @Transactional
 class AdminService {
 
-    RestTemplate restTemplate
     DaoService daoService
 
     @Value('${auth0.connection}')

@@ -6,14 +6,7 @@ import org.springframework.web.client.HttpClientErrorException
 class UrlMappings {
 
     static mappings = {
-        login:
-        "/login"(controller: 'login')
-        logout:
-        "/logout"(controller: 'logout')
-        callback:
-        "/callback"(controller: 'callback')
-        home:
-        "/portal/home"(controller: 'home')
+        home:"/portal/home"(controller: 'home')
         "/portal/createUser"(controller: 'home', action: [GET: 'createUser'])
         "/portal/findAllUsers"(controller: 'home', action: [GET: 'findAllUsers'])
 
